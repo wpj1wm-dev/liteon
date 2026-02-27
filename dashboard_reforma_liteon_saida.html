@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Reforma Tributária - LITEON (Saídas)</title>
+<style>
+
+
+    :root {
+        --bg-main: #050816;
+        --bg-card: #0b1120;
+        --bg-soft: #020617;
+        --border-subtle: #1f2937;
+        --text-main: #e5e7eb;
+        --text-muted: #9ca3af;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top left, #1b2a4a 0, #020617 36%, #020617 100%);
+        color: var(--text-main);
+        padding: 32px 12px 40px;
+    }
+    .page { max-width: 1440px; margin: 0 auto; }
+    header { margin-bottom: 28px; }
+    .badge-row {
+        display:flex; justify-content: space-between; align-items:center;
+        gap:12px; margin-bottom:8px; flex-wrap:wrap;
+    }
+    .badge {
+        display:inline-flex; align-items:center; gap:8px;
+        font-size:12px; padding:6px 10px; border-radius:999px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(37, 99, 235, 0.16));
+        color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    .badge span.dot {
+        width:8px; height:8px; border-radius:999px; background:var(--accent);
+        box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.3);
+    }
+    h1 { font-size: 26px; margin: 0 0 6px; letter-spacing: -0.02em; }
+    .subtitle { font-size: 14px; color: var(--text-muted); max-width: 980px; }
+    .kpi-row {
+        margin-top: 14px;
+        display:grid;
+        grid-template-columns: repeat(4, minmax(0,1fr));
+        gap: 12px;
+    }
+    @media (max-width: 980px) {
+        .kpi-row { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    .kpi {
+        border-radius: 16px;
+        border: 1px solid var(--border-subtle);
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.08), #020617 60%);
+        padding: 12px 14px;
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.75);
+    }
+    .kpi .label { font-size: 11px; color: var(--text-muted); }
+    .kpi .value { font-size: 18px; margin-top: 4px; }
+    .kpi .hint { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .grid {
+        display:grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+        gap: 16px;
+        margin-top: 16px;
+    }
+    @media (max-width: 1024px) {
+        .grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    .chart-card {
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.06), #020617 55%);
+        border-radius: 18px;
+        border: 1px solid var(--border-subtle);
+        padding: 14px 14px 16px;
+        display:flex; flex-direction:column; gap: 12px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+    }
+    .chart-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+    .chart-title-block h2 { font-size: 15px; margin: 0 0 2px; }
+    .chart-title-block p { font-size: 12px; color: var(--text-muted); margin: 0; }
+    .pill {
+        font-size: 11px; padding: 4px 9px; border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        background: rgba(15, 23, 42, 0.9); white-space: nowrap;
+    }
+    .chart-body {
+        display:grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+        gap: 18px; align-items: stretch;
+    }
+    @media (max-width: 768px) {
+        .chart-body { grid-template-columns: minmax(0, 1fr); }
+    }
+    figure {
+        margin:0; padding:0;
+        background:#020617;
+        border-radius: 12px;
+        border: 1px solid rgba(15,23,42,0.9);
+        display:flex; align-items:center; justify-content:center;
+        overflow:hidden;
+        min-height: 280px;
+    }
+    figure img { display:block; width:100%; height:100%; }
+    .analysis h3 {
+        font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em;
+        color: var(--accent); margin: 0 0 6px;
+    }
+    .analysis p, .analysis li {
+        font-size: 12px; color: var(--text-muted); line-height: 1.55;
+        margin: 0 0 6px;
+    }
+    .analysis ul { padding-left: 16px; margin: 0; }
+    table {
+        width:100%;
+        border-collapse: collapse;
+        font-size: 12px;
+        color: var(--text-muted);
+        overflow:hidden;
+        border-radius: 10px;
+        border: 1px solid rgba(31,41,55,0.8);
+        background: rgba(2,6,23,0.7);
+    }
+    th, td {
+        padding: 8px 10px;
+        border-bottom: 1px solid rgba(31,41,55,0.7);
+        text-align: left;
+        vertical-align: top;
+    }
+    th { color: #cbd5e1; font-weight: 600; }
+    .note {
+        margin-top: 10px;
+        font-size: 11px;
+        color: #94a3b8;
+        background: rgba(56, 189, 248, 0.06);
+        border: 1px dashed rgba(56, 189, 248, 0.35);
+        padding: 10px 12px;
+        border-radius: 12px;
+    }
+    footer { margin-top: 22px; font-size: 11px; color: #6b7280; text-align: right; }
+
+
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+    <div class="badge-row">
+        <div class="badge"><span class="dot"></span><span>LITEON · Reforma Tributária (IBS/CBS)</span></div>
+        <div style="font-size:11px; color:var(--text-muted);">EFD ICMS/IPI · Base: Cruzamentodedados_LITEON.xlsx (C170/C100) · Período 06/05/2025 a 31/07/2025 · Receita (VL_ITEM · saídas IND_OPER=1): R$ 53.032.686,99</div>
+    </div>
+    <h1>Visão Executiva – Impactos da Reforma Tributária nas Operações da LITEON</h1>
+    <p class="subtitle">
+        Painel analítico com simulações de IBS/CBS sobre base de itens da EFD (C170), destacando carga atual x cenários,
+        “hotspots” por CFOP e UF, dispersão de alíquotas efetivas atuais e mapa de risco por NCM.
+        As análises são indicativas e dependem de premissas que ainda podem mudar com regulamentação e transição.
+    </p>
+
+    <div class="kpi-row">
+        <div class="kpi">
+            <div class="label">Receita (VL_ITEM · saídas)</div>
+            <div class="value">R$ 53.032.686,99</div>
+            <div class="hint">Base filtrada: IND_OPER = 1</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Carga atual (ICMS+PIS+COFINS)</div>
+            <div class="value">R$ 8.723.138,26</div>
+            <div class="hint">Efetiva média: 16.4%</div>
+        </div>
+        <div class="kpi">
+            <div class="label">IBS/CBS simulado (26%)</div>
+            <div class="value">R$ 13.788.498,62</div>
+            <div class="hint">Δ: R$ 5.065.360,36 (9.6% da receita)</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Mensagem-chave</div>
+            <div class="value">Pressão de carga</div>
+            <div class="hint">Saídas com efetiva abaixo de 26% tendem a subir no modelo uniforme</div>
+        </div>
+    </div>
+
+    <div class="note"><b>Resumo do impacto (26%):</b> a carga simulada sobe em <b>R$ 5.065.360,36</b> (+<b>58.1%</b> sobre a carga atual), equivalente a <b>9.6%</b> da receita de saídas analisada. Priorize revisão de CFOP/NCM, estratégia comercial e simulação <b>líquida</b> (entradas x saídas) para estimar créditos e capital de giro.</div>
+</header>
+
+<main class="grid">
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>1. Carga Tributária Atual x IBS/CBS (26%)</h2>
+            <p>Comparação consolidada de ICMS + PIS + COFINS versus IBS/CBS com alíquota combinada de 26% (sobre VL_ITEM · saídas).</p>
+        </div>
+        <div class="pill">LITEON · Consolidado (saídas)</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart1_carga_total.png" alt="Carga Atual x IBS/CBS 26%"></figure>
+        <div class="analysis">
+            <h3>Leitura executiva</h3>
+            <p>
+                A LITEON apresenta <b>alíquota efetiva média atual</b> de <b>16.4%</b> nas <b>saídas (IND_OPER=1)</b>,
+                abaixo do cenário de referência do IBS/CBS (26%). Isso sugere aumento do débito no recorte bruto das saídas,
+                e torna <b>créditos das entradas</b> (compras) e capacidade de repasse comercial fatores decisivos para o impacto econômico final.
+            </p>
+            <p>
+                Próximos passos recomendados: simulação <b>líquida</b> (entradas x saídas), revisão de políticas de preço por UF e por CFOP,
+                e plano de governança de cadastros (NCM/CFOP/CST).
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>2. Top CFOP por Receita (saídas) – Carga Atual x IBS/CBS (26%)</h2>
+            <p>Foco nas naturezas de operação com maior materialidade, destacando onde a reforma “bate” mais.</p>
+        </div>
+        <div class="pill">Top 8 CFOP</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart2_cfop_top.png" alt="Top CFOP - Carga Atual x IBS 26%"></figure>
+        <div class="analysis">
+            <h3>Prioridades</h3>
+            <p>
+                Use os CFOPs líderes como <b>escopo mínimo</b> do projeto de reforma: revisar parametrização fiscal,
+                contratos (repasse), cadastro e cadeia de preços.
+            </p>
+            <p><b>Tabela de apoio (Top 6):</b></p>
+            <table><tr><th>CFOP</th><th>Receita (saídas)</th><th>Carga atual</th><th>IBS/CBS 26%</th><th>Δ 26%</th></tr><tr><td>6101</td><td>R$ 47.927.377,69</td><td>R$ 8.682.397,10</td><td>R$ 12.461.118,20</td><td>R$ 3.778.721,10</td></tr><tr><td>5101</td><td>R$ 4.502.058,97</td><td>R$ 0,00</td><td>R$ 1.170.535,33</td><td>R$ 1.170.535,33</td></tr><tr><td>5949</td><td>R$ 357.529,30</td><td>R$ 1.518,65</td><td>R$ 92.957,62</td><td>R$ 91.438,97</td></tr><tr><td>5102</td><td>R$ 137.709,16</td><td>R$ 37.818,34</td><td>R$ 35.804,38</td><td>R$ -2.013,96</td></tr><tr><td>5124</td><td>R$ 101.404,00</td><td>R$ 0,00</td><td>R$ 26.365,04</td><td>R$ 26.365,04</td></tr><tr><td>6102</td><td>R$ 6.607,87</td><td>R$ 1.404,17</td><td>R$ 1.718,05</td><td>R$ 313,88</td></tr></table>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>3. Receita por UF de Destino (Top 10 · saídas)</h2>
+            <p>Base para estratégia na tributação no destino e avaliação de riscos por praça/cliente.</p>
+        </div>
+        <div class="pill">Destino (UF)</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart3_uf_top10.png" alt="Receita por UF - Top 10"></figure>
+        <div class="analysis">
+            <h3>Implicações</h3>
+            <p>
+                Na lógica do IBS, o foco migra para o <b>destino</b>. UFs com maior materialidade devem ser priorizadas em:
+                repasse de preço, condições comerciais e monitoramento de regras complementares.
+            </p>
+            <p><b>Top UFs (receita · saídas):</b></p>
+            <table><tr><th>UF</th><th>Receita (saídas)</th></tr><tr><td>São Paulo</td><td>R$ 46.792.219,55</td></tr><tr><td>Amazonas</td><td>R$ 5.098.701,43</td></tr><tr><td>Bahia</td><td>R$ 1.141.766,01</td></tr></table>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>4. Cenários de IBS/CBS por Alíquota (24% / 26% / 28%)</h2>
+            <p>Sensibilidade da carga em função da alíquota global do IBS/CBS, aplicada sobre VL_ITEM das saídas.</p>
+        </div>
+        <div class="pill">Sensibilidade</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart4_cenarios_aliquota.png" alt="Cenários IBS/CBS"></figure>
+        <div class="analysis">
+            <h3>Como usar</h3>
+            <p>
+                A sensibilidade ajuda a negociar internamente <b>faixas de preço</b> e definir gatilhos: cada 1 p.p. de alíquota
+                representa impacto direto sobre a receita de saídas. Trate o cenário 26% como “referência” e mantenha 24% e 28% como bandas.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>5. Pareto de CFOP – onde concentrar esforço</h2>
+            <p>Concentração da receita (saídas) por CFOP para priorizar as operações mais materiais.</p>
+        </div>
+        <div class="pill">Pareto</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart5_pareto_cfop.png" alt="Pareto CFOP"></figure>
+        <div class="analysis">
+            <h3>Gestão do escopo</h3>
+            <p>
+                Em geral, poucos CFOPs explicam a maior parte da receita. Use este Pareto para construir um
+                backlog objetivo: primeiro os CFOPs que somam “quase tudo”, depois as exceções.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>6. Heatmap CFOP x UF – hotspots de impacto (Δ IBS/CBS 26%)</h2>
+            <p>Matriz de impacto por combinação de CFOP e UF (IBS/CBS 26% menos carga atual), recortada para Top CFOP e Top UF.</p>
+        </div>
+        <div class="pill">Hotspots</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart6_heatmap_cfop_uf_delta26.png" alt="Heatmap CFOP x UF"></figure>
+        <div class="analysis">
+            <h3>Decisão prática</h3>
+            <p>
+                As células mais intensas indicam onde a reforma tende a alterar mais a carga (por destino e natureza de operação).
+                Use para: <b>precificação</b> por praça, renegociação de condições e correção de parametrizações fiscais.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>7. Histograma – alíquota efetiva atual (ICMS+PIS+COFINS)</h2>
+            <p>Distribuição da carga efetiva atual por item: (ICMS + PIS + COFINS) / VL_ITEM, considerando apenas saídas.</p>
+        </div>
+        <div class="pill">Dispersão</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart7_hist_aliquota_efetiva_atual.png" alt="Histograma alíquota efetiva atual"></figure>
+        <div class="analysis">
+            <h3>O que o histograma está dizendo</h3>
+            <p>Percentis (itens · saídas): P25 <b>0.0%</b> · Mediana <b>15.6%</b> · P75 <b>19.3%</b> · P90 <b>19.3%</b> · P95 <b>19.3%</b>.</p>
+            <p>
+                Uma base com muitos itens em alíquota efetiva baixa tende a sofrer salto ao migrar para alíquota uniforme (ex.: 26%).
+                Isso reforça o papel de créditos das entradas e eventual repasse de preços.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>8. Waterfall – de onde vem o Δ (Atual → IBS/CBS 26%)</h2>
+            <p>Decomposição do aumento/redução por CFOP, conectando o número final às causas.</p>
+        </div>
+        <div class="pill">Causas</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart8_waterfall_delta26_cfop.png" alt="Waterfall delta por CFOP"></figure>
+        <div class="analysis">
+            <h3>Como usar em reunião</h3>
+            <p>
+                Este gráfico ajuda a explicar por quais CFOPs o impacto é puxado.
+                Trate os 3–5 primeiros CFOPs como “frentes” (cadastro + processo + política comercial).
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>9. Mapa de risco por NCM – materialidade x Δ%</h2>
+            <p>Prioriza produtos: eixo X materialidade (log) e eixo Y variação percentual sobre a carga atual (26%).</p>
+        </div>
+        <div class="pill">Produtos</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart9_mapa_risco_ncm_delta_pct26.png" alt="Mapa de risco por NCM"></figure>
+        <div class="analysis">
+            <h3>Prioridade por mix</h3>
+            <p>
+                NCMs de alta materialidade e Δ% alto devem entrar primeiro no plano: revisão fiscal, política de preço,
+                margens e estratégia comercial por linha de produto.
+            </p>
+            <p><b>Top NCM (receita · saídas + Δ 26%):</b></p>
+            <table><tr><th>NCM</th><th>Receita (saídas)</th><th>Δ 26%</th></tr><tr><td>85044021</td><td>R$ 52.530.840,66</td><td>R$ 4.975.621,47</td></tr><tr><td>80030000</td><td>R$ 345.060,13</td><td>R$ 89.715,63</td></tr><tr><td>85437099</td><td>R$ 137.709,16</td><td>R$ -2.013,96</td></tr><tr><td>39199090</td><td>R$ 6.607,87</td><td>R$ 313,88</td></tr><tr><td>47079000</td><td>R$ 5.511,85</td><td>R$ 828,73</td></tr><tr><td>84733041</td><td>R$ 4.261,61</td><td>R$ 396,74</td></tr></table>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>10. B2B x B2C – impacto (proxy por CPF/CNPJ)</h2>
+            <p>Comparativo da carga atual vs IBS/CBS 26% por segmentação simples (CNPJ vs CPF/indefinido), em saídas.</p>
+        </div>
+        <div class="pill">Clientes</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart10_b2b_b2c.png" alt="B2B x B2C"></figure>
+        <div class="analysis">
+            <h3>Interpretação</h3>
+            <p>
+                Em B2B, o cliente tende a valorizar neutralidade via crédito. Em B2C, o repasse de preço é mais sensível
+                e exige leitura de elasticidade. Use este recorte para desenhar políticas comerciais diferentes na transição.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>11. Qualidade cadastral e consistência fiscal (itens · saídas)</h2>
+            <p>Indicadores de completude e coerência para reduzir risco de parametrização e divergências.</p>
+        </div>
+        <div class="pill">Qualidade</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart11_qualidade_dados.png" alt="Qualidade de dados"></figure>
+        <div class="analysis">
+            <h3>Checklist rápido</h3>
+            <ul>
+                <li><b>% sem NCM:</b> 0.0%</li><li><b>% sem CFOP:</b> 0.0%</li><li><b>% sem CST_ICMS:</b> 0.0%</li><li><b>% VL_ITEM=0:</b> 0.0%</li><li><b>% ICMS>0 e BC=0:</b> 0.0%</li><li><b>% BC>0 e ICMS=0:</b> 0.0%</li>
+            </ul>
+            <div class="note">
+                <b>Leitura:</b> mesmo com boa completude no recorte atual, mantenha governança contínua de NCM/CFOP/CST
+                (principalmente em operações novas e exceções) para evitar “surpresas” na transição do IBS/CBS.
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>12. Regime tributário do destinatário (proxy) – risco comercial e de crédito</h2>
+            <p>Distribuição da receita por regime do cliente (quando disponível). Útil para estratégia B2B/B2C e gestão de créditos.</p>
+        </div>
+        <div class="pill">Cadastro de clientes</div>
+    </div>
+    <div class="chart-body">
+        <figure><img src="liteon_dashboard_assets/liteon_chart12_regime_destinatario.png" alt="Regime do destinatário"></figure>
+        <div class="analysis">
+            <h3>O que olhar</h3>
+            <p>
+                Clientes em <b>Lucro Real</b> tendem a capturar melhor a lógica de crédito (neutralidade).
+                Percentuais elevados em <b>“Não encontrado”</b> sugerem lacuna cadastral (risco de segmentação/precificação).
+            </p>
+            <p><b>Tabela de apoio:</b></p>
+            <table><tr><th>Regime (proxy)</th><th>Receita (saídas)</th><th>%</th></tr><tr><td>LUCRO REAL</td><td>R$ 34.182.744,43</td><td>64.5%</td></tr><tr><td>NÃO ENCONTRADO</td><td>R$ 17.716.991,10</td><td>33.4%</td></tr><tr><td>SIMPLES NACIONAL</td><td>R$ 1.132.951,46</td><td>2.1%</td></tr></table>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>Checklist de adequação (curto prazo)</h2>
+            <p>Ações “sem arrependimento” para começar já, usando os hotspots identificados.</p>
+        </div>
+        <div class="pill">Plano de ação</div>
+    </div>
+    <div class="chart-body">
+        <div class="analysis" style="grid-column: 1 / -1;">
+            <h3>Trilha recomendada</h3>
+            <ul>
+                <li><b>Simulação líquida (entradas x saídas):</b> estimar IBS/CBS líquido e risco de acúmulo de créditos por período (capital de giro e ressarcimento).</li>
+                <li><b>Governança de cadastros:</b> validar NCM/CFOP/CST por famílias e operações (priorizando Top CFOP e Top NCM).</li>
+                <li><b>Precificação por praça:</b> criar matriz de repasse por UF e por CFOP (use o heatmap como mapa de decisão).</li>
+                <li><b>Contratos B2B:</b> revisar cláusulas de repasse e alinhamento com clientes-chave, considerando transição e crédito.</li>
+                <li><b>Comitê de reforma:</b> fiscal + comercial + finanças com rotina de cenários e acompanhamento da regulamentação.</li>
+            </ul>
+            <div class="note">
+                <b>Observação:</b> este painel está <b>filtrado para saídas (IND_OPER=1)</b> ao tratar receita e análises relacionadas.
+                Para estimar impacto econômico real do IBS/CBS, é fundamental incorporar as entradas (compras) para medir créditos, saldo,
+                prazos de ressarcimento e efeitos no capital de giro.
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>Premissas utilizadas</h2>
+            <p>Critérios e simplificações adotados para cálculo e visualizações.</p>
+        </div>
+        <div class="pill">Metodologia</div>
+    </div>
+    <div class="chart-body">
+        <div class="analysis" style="grid-column: 1 / -1;">
+            <ul>
+                <li><b>Base de receita:</b> somatório de <b>VL_ITEM</b> apenas das <b>saídas (IND_OPER=1)</b>.</li>
+                <li><b>Carga atual:</b> somatório por item de <b>VL_ICMS.1 + VL_PIS.1 + VL_COFINS.1</b>.</li>
+                <li><b>IBS/CBS simulado:</b> aplicado de forma <b>uniforme</b> sobre a receita de saídas, nos cenários <b>24%</b>, <b>26%</b> e <b>28%</b>.</li>
+                <li><b>Δ (delta):</b> <b>IBS/CBS (cenário) − carga atual</b>.</li>
+                <li><b>Heatmap:</b> recorte para <b>Top 10 CFOP</b> e <b>Top 10 UF</b> por receita de saídas (para legibilidade).</li>
+                <li><b>B2B x B2C (proxy):</b> classificação por tamanho do documento em <b>CPF/CNPJ</b> (14 dígitos = CNPJ, 11 dígitos = CPF; demais = indefinido).</li>
+                <li><b>Regime do destinatário (proxy):</b> conforme coluna <b>REGIME</b> disponível na base cruzada; itens “Não encontrado” sinalizam lacunas cadastrais.</li>
+                <li><b>Limitação:</b> este painel não calcula IBS/CBS <b>líquido</b> (créditos das entradas); trata o impacto bruto nas saídas.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    LITEON · Reforma Tributária IBS/CBS – Dashboard de mapeamento e simulação fiscal (base EFD · itens C170).
+</footer>
+</div>
+</body>
+</html>
